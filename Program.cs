@@ -1,6 +1,7 @@
 using Dinners2.CommandHandlers;
 using Dinners2.Database;
 using Dinners2.QueryHandlers;
+using Dinners2.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,13 +15,15 @@ builder.Services.AddDbContext<DinnerDb>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add command handlers
+// Add Handlers
 builder.Services.AddTransient<GetDinnerQueryHandler>();
-builder.Services.AddTransient<GetDinnersQueryHandler>();
 builder.Services.AddScoped<AddDinnerCommandHandler>();
 builder.Services.AddScoped<EditDinnerCommandHandler>();
 builder.Services.AddScoped<DeleteDinnerCommandHandler>();
 builder.Services.AddScoped<PlanDinnersCommandHandler>();
+
+// Add Services
+builder.Services.AddTransient<DinnerService>();
 
 builder.Services.AddControllers();
 

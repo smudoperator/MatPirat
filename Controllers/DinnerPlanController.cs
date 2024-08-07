@@ -12,12 +12,15 @@ namespace Dinners2.Controllers
         private readonly ILogger<DinnerPlanController> _logger;
         private readonly PlanDinnersCommandHandler _commandHandler;
 
-        public DinnerPlanController(ILogger<DinnerPlanController> logger)
+        public DinnerPlanController(
+            ILogger<DinnerPlanController> logger,
+            PlanDinnersCommandHandler commandHandler)
         {
             _logger = logger;
+            _commandHandler = commandHandler;
         }
 
-        [HttpPost(Name = "PlanDinners")]
+        [HttpPost("PlanDinners", Name = "PlanDinners")]
         public ActionResult<DinnerPlanDto> PlanDinners(CreateDinnerPlanDto request)
         {
             var command = new PlanDinnersCommand();
@@ -25,7 +28,7 @@ namespace Dinners2.Controllers
 
             if (result is null)
             {
-                return BadRequest(); // Fix this
+                return BadRequest();
             }
             return Ok(result);
         }
