@@ -1,6 +1,5 @@
 ﻿using Dinners2.Database;
 using Dinners2.Dtos;
-using Dinners2.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dinners2.Services
@@ -25,6 +24,12 @@ namespace Dinners2.Services
             }
 
             return dinners;
+        }
+
+        public async Task<DinnerDto> GetTaco()
+        {
+            var taco = await _dinnerDb.Dinners.FirstOrDefaultAsync(x => x.Name.ToLower().Contains("taco"));
+            return taco;
         }
     }
 }

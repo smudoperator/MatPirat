@@ -28,7 +28,7 @@ namespace Dinners2.CommandHandlers
             // Distribute dinners over weekday
 
 
-            //  
+            // HandleTaco
 
             var dinnerList = new List<DinnerDto>();
             var dinnerPlan = new DinnerPlanDto(
@@ -38,6 +38,15 @@ namespace Dinners2.CommandHandlers
                 );
             
             return dinnerPlan;
+        }
+
+        public async Task<DinnerDto?> HandleTacoLogic(List<DinnerDto> dinners)
+        {
+            var taco = await _dinnerService.GetTaco();
+
+            if (taco is null) return null;
+
+            return taco;
         }
     }
 }

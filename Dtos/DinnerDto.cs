@@ -18,6 +18,8 @@ namespace Dinners2.Dtos
 
         public MeatType MeatType { get; set; }
 
+        public SkillLevel SkillLevel { get; set; }
+
         public List<string> Ingredients { get; set; } = new List<string>();
 
         public List<string> Tags { get; set; } = new List<string>();
@@ -44,5 +46,14 @@ namespace Dinners2.Dtos
         Chicken,
         Wild,
         Other
+    }
+
+    public enum SkillLevel
+    {
+        Easy,
+        Medium,
+        Hard,
+        Expert,
+        Impossible
     }
 }
