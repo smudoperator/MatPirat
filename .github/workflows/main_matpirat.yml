@@ -1,6 +1,5 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy ASP.Net Core app to Azure Web App - MatPirat
 
 on:
@@ -21,11 +20,14 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Restore dependencies
+        run: dotnet restore MatPirat/Dinners2.sln
+
       - name: Build solution
-        run: dotnet build --configuration Release
+        run: dotnet build MatPirat/Dinners2.sln --configuration Release
 
       - name: Publish project
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish MatPirat/Dinners2.csproj -c Release -o ./publish
 
       - name: List files in publish directory
         run: dir ./publish # Use `ls -R ./publish` on Unix-based systems
@@ -43,7 +45,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
