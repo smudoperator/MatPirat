@@ -24,13 +24,13 @@ jobs:
         run: dir . # This lists all files and directories in the root
 
       - name: Restore dependencies
-        run: dotnet restore MatPirat/Dinners2.sln
+        run: dotnet restore Dinners2.sln
 
       - name: Build solution
-        run: dotnet build MatPirat/Dinners2.sln --configuration Release
+        run: dotnet build Dinners2.sln --configuration Release
 
       - name: Publish project
-        run: dotnet publish MatPirat/Dinners2.csproj -c Release -o ./publish
+        run: dotnet publish Dinners2.csproj -c Release -o ./publish
 
       - name: List files in publish directory
         run: dir ./publish # Use `ls -R ./publish` on Unix-based systems
