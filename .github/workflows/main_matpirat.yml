@@ -59,6 +59,13 @@ jobs:
       - name: List files in current directory
         run: dir # List all files and directories
 
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8F8EBF3CAF9F404CB3A41007411F3799 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9FD58DDF8F75470E8026666C5BA77D05 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_27B8AA9C1F2341588020329B29257CD8 }}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
