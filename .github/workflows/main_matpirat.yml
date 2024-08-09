@@ -20,9 +20,6 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: List contents of the working directory
-        run: dir . # This lists all files and directories in the root
-
       - name: Restore dependencies
         run: dotnet restore Dinners2.sln
 
@@ -33,7 +30,7 @@ jobs:
         run: dotnet publish Dinners2.csproj -c Release -o ./publish
 
       - name: List files in publish directory
-        run: dir ./publish # Use `ls -R ./publish` on Unix-based systems
+        run: dir ./publish # For Unix-based systems use: ls -R ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -57,7 +54,10 @@ jobs:
           name: .net-app
 
       - name: List files in download directory
-        run: dir . # Check if `./publish` directory exists after download
+        run: dir . # For Unix-based systems use: ls -R .
+
+      - name: Print working directory
+        run: pwd
 
       - name: Login to Azure
         uses: azure/login@v2
