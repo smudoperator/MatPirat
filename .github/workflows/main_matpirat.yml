@@ -20,6 +20,9 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: List contents of the working directory
+        run: dir . # This lists all files and directories in the root
+
       - name: Restore dependencies
         run: dotnet restore MatPirat/Dinners2.sln
 
