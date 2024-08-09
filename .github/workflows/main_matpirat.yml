@@ -1,6 +1,5 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy ASP.Net Core app to Azure Web App - MatPirat
 
 on:
@@ -21,14 +20,17 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Restore dependencies
+        run: dotnet restore Dinners2.sln
+
       - name: Build solution
-        run: dotnet build --configuration Release
+        run: dotnet build Dinners2.sln --configuration Release
 
       - name: Publish project
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish Dinners2.csproj -c Release -o ./publish
 
       - name: List files in publish directory
-        run: dir ./publish # Use `ls -R ./publish` on Unix-based systems
+        run: dir ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -43,7 +45,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -51,8 +53,11 @@ jobs:
         with:
           name: .net-app
 
-      - name: List files in download directory
-        run: dir . # Check if `./publish` directory exists after download
+      - name: Print current working directory
+        run: pwd
+
+      - name: List files in current directory
+        run: dir # List all files and directories
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -67,5 +72,4 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: ./publish
-          
+          package: . # Adjust this if necessary based on the location of the files
