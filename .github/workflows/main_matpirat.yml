@@ -53,11 +53,11 @@ jobs:
         with:
           name: .net-app
 
-      - name: List files in download directory
-        run: dir . # For Unix-based systems use: ls -R .
-
       - name: Print working directory
         run: pwd
+
+      - name: List files in download directory
+        run: dir . # Check if `./publish` directory exists after download
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -72,5 +72,4 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: ./publish
-          
+          package: ./publish # Adjust this path based on where the files are
