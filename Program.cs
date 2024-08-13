@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DinnerDb>(options =>
     options.UseSqlite("Data Source=dinners.db"));
 
-// Add services to the container.
+// Add services to the container
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
