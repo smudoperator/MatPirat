@@ -2991,24 +2991,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Simon Halland\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\simhal\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Simon Halland\\source\\repos\\MatPirat\\Dinners2.csproj",
+      "projectUniqueName": "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\Dinners2.csproj",
       "projectName": "Dinners2",
-      "projectPath": "C:\\Users\\Simon Halland\\source\\repos\\MatPirat\\Dinners2.csproj",
-      "packagesPath": "C:\\Users\\Simon Halland\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Simon Halland\\source\\repos\\MatPirat\\obj\\",
+      "projectPath": "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\Dinners2.csproj",
+      "packagesPath": "C:\\Users\\simhal\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Simon Halland\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\simhal\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3017,8 +3012,7 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://fjordtours.pkgs.visualstudio.com/_packaging/FTDevelopFeed/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
@@ -3030,6 +3024,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3078,7 +3077,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

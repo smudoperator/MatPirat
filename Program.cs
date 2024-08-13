@@ -25,6 +25,18 @@ builder.Services.AddScoped<PlanDinnersCommandHandler>();
 // Add Services
 builder.Services.AddTransient<DinnerService>();
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:3000") // Replace with actual frontend URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials());
+});
+
+// Add Controllers
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -52,6 +64,9 @@ app.UseSwaggerUI(c =>
 });
 
 app.UseHttpsRedirection();
+
+// Use CORS
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 
