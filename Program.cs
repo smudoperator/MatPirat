@@ -12,8 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddDbContext<DinnerDb>(options =>
 //    options.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db"));
 
+// Register DbContexts with the updated configuration
+builder.Services.AddDbContext<DinnerDb>(options =>
+    options.UseSqlite($"Data Source={Path.Combine("D:\\home\\site\\wwwroot", "dinners.db")}"));
+
+
 // Testing to add DbContext without connection string
-builder.Services.AddDbContext<DinnerDb>();
+// builder.Services.AddDbContext<DinnerDb>();
 
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
