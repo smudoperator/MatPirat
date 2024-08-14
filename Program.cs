@@ -9,11 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Register DbContexts
 //builder.Services.AddDbContext<DinnerDb>(options =>
 //    options.UseSqlite("Data Source=dinners.db"));
-builder.Services.AddDbContext<DinnerDb>(options =>
-    options.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db"));
+//builder.Services.AddDbContext<DinnerDb>(options =>
+//    options.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db"));
+
+// Testing to add DbContext without connection string
+builder.Services.AddDbContext<DinnerDb>();
 
 // Add services to the container
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -38,7 +40,6 @@ builder.Services.AddCors(options =>
 });
 
 // Add Controllers
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -71,7 +72,5 @@ app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
