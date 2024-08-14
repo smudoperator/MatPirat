@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register DbContexts
+//builder.Services.AddDbContext<DinnerDb>(options =>
+//    options.UseSqlite("Data Source=dinners.db"));
 builder.Services.AddDbContext<DinnerDb>(options =>
-    options.UseSqlite("Data Source=dinners.db"));
+    options.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db"));
 
 // Add services to the container
 

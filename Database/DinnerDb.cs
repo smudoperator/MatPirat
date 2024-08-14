@@ -12,9 +12,16 @@ namespace Dinners2.Database
 
         public DbSet<DinnerDto> Dinners { get; set; }
 
+        // Old setup
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite("Data Source=dinners.db");
+        //}
+
+        // Setup for storing SqLite properly on Cloud Services
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=dinners.db");
+            optionsBuilder.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
