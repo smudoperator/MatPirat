@@ -42,7 +42,9 @@ builder.Services.AddCors(options =>
 // Add Controllers
 builder.Services.AddControllers();
 
+
 var app = builder.Build();
+
 
 // Apply database migrations
 using (var scope = app.Services.CreateScope())
