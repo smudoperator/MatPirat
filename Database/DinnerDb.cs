@@ -6,23 +6,21 @@ namespace Dinners2.Database
 {
     public class DinnerDb : DbContext
     {
-        public DinnerDb(DbContextOptions<DinnerDb> options) : base(options)
-        {
-        }
-
         public DbSet<DinnerDto> Dinners { get; set; }
 
-        // Old setup
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite("Data Source=dinners.db");
-        //}
+        public string DbPath { get; }
 
-        // Setup for storing SqLite properly on Cloud Services
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DinnerDb()
         {
-            optionsBuilder.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db");
+            // Use platform-specific local folder
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = Path.Join(path, "dinners.db");
         }
+
+        // Configure EF to create a Sqlite database file in the local folder
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite($"Data Source={DbPath}");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

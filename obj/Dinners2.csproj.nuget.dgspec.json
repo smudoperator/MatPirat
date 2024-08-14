@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\Dinners2.csproj": {}
+    "C:\\Users\\simhal\\source\\repos\\MatPirat\\Dinners2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\Dinners2.csproj": {
+    "C:\\Users\\simhal\\source\\repos\\MatPirat\\Dinners2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\Dinners2.csproj",
+        "projectUniqueName": "C:\\Users\\simhal\\source\\repos\\MatPirat\\Dinners2.csproj",
         "projectName": "Dinners2",
-        "projectPath": "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\Dinners2.csproj",
+        "projectPath": "C:\\Users\\simhal\\source\\repos\\MatPirat\\Dinners2.csproj",
         "packagesPath": "C:\\Users\\simhal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\simhal\\Source\\Repos\\MatPirat\\obj\\",
+        "outputPath": "C:\\Users\\simhal\\source\\repos\\MatPirat\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\simhal\\AppData\\Roaming\\NuGet\\NuGet.Config",
