@@ -1,6 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-name: Build and deploy ASP.Net Core app to Azure Web App - MatPirat
+name: Build, Backup, and Deploy ASP.Net Core app to Azure Web App - MatPirat
 
 on:
   push:
@@ -21,13 +21,24 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Verify Database Path
+        run: |
+          Write-Host "Current directory:"
+          pwd
+          Write-Host "Listing files in Data directory:"
+          dir Data
+
       - name: Backup SQLite Database
         run: |
-          if (Test-Path 'Database/dinners.db') {
-            Copy-Item 'Database/dinners.db' 'Database/dinners_backup.db'
+          if (Test-Path 'Data/dinners.db') {
+            Write-Host "Database exists. Proceeding with backup."
+            Copy-Item 'Data/dinners.db' 'Data/dinners_backup.db'
           } else {
             Write-Host "Database does not exist. Skipping backup."
           }
+
+      - name: Verify Backup File
+        run: dir Data
 
       - name: Restore dependencies
         run: dotnet restore Dinners2.sln
@@ -46,12 +57,15 @@ jobs:
         with:
           name: .net-app
           path: ./publish
-          
+
       - name: Upload database backup
         uses: actions/upload-artifact@v4
         with:
           name: database-backup
-          path: Database/dinners_backup.db
+          path: Data/dinners_backup.db
+          if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
 
   deploy:
     runs-on: windows-latest
@@ -89,8 +103,9 @@ jobs:
 
       - name: Restore SQLite Database
         run: |
-          if (Test-Path 'Database/dinners_backup.db') {
-            Move-Item 'Database/dinners_backup.db' 'Database/dinners.db' -Force
+          if (Test-Path 'Data/dinners_backup.db') {
+            Write-Host "Backup exists. Restoring."
+            Move-Item 'Data/dinners_backup.db' 'Data/dinners.db' -Force
           } else {
             Write-Host "No backup found. Skipping restore."
           }
