@@ -38,6 +38,9 @@ jobs:
           name: .net-app
           path: ./publish
 
+      - name: List files in current directory
+        run: dir # For debug purposes
+
   deploy:
     runs-on: windows-latest
     needs: build
@@ -72,4 +75,4 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: './publish'
+          package: .
