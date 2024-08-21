@@ -20,6 +20,14 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Backup SQLite Database
+        run: |
+          if (Test-Path 'Database/dinners.db') {
+            Copy-Item 'Database/dinners.db' 'Database/dinners_backup.db'
+          } else {
+            Write-Host "Database does not exist. Skipping backup."
+          }
+
       - name: Restore dependencies
         run: dotnet restore Dinners2.sln
 
@@ -37,6 +45,12 @@ jobs:
         with:
           name: .net-app
           path: ./publish # Ensure that this path is correct
+
+      - name: Upload database backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: database-backup
+          path: Database/dinners_backup.db
 
   deploy:
     runs-on: windows-latest
@@ -56,8 +70,10 @@ jobs:
       - name: List files in current directory
         run: dir # List all files and directories to verify download
 
-      - name: List files in artifact directory
-        run: dir ./publish # Verify that the artifact was downloaded correctly
+      - name: Download database backup
+        uses: actions/download-artifact@v4
+        with:
+          name: database-backup
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -72,4 +88,12 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: './publish' # Ensure this path is correct
+          package: '.'
+
+      - name: Restore SQLite Database
+        run: |
+          if (Test-Path 'Database/dinners_backup.db') {
+            Move-Item 'Database/dinners_backup.db' 'Database/dinners.db' -Force
+          } else {
+            Write-Host "No backup found. Skipping restore."
+          }
