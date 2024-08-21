@@ -62,6 +62,10 @@ jobs:
       - name: List files in current directory
         run: dir # List all files and directories
 
+      - name: List files in publish directory
+        run: |
+          dir ./publish 
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -75,4 +79,4 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: .
+          package: './publish'
