@@ -9,6 +9,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  test-login:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          enable-AzPSSession: false
+          environment: azurecloud
+
+      - name: Verify Login
+        run: |
+          az account show
+  
   backup-and-build:
     runs-on: windows-latest
 
