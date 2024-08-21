@@ -1,1 +1,5 @@
+# Ignore Visual Studio folder
 .vs/
+
+# Ignore database file
+dinners.db
