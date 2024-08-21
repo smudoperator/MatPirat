@@ -30,16 +30,13 @@ jobs:
         run: dotnet publish Dinners2.csproj -c Release -o ./publish
 
       - name: List files in publish directory
-        run: dir ./publish
+        run: dir ./publish # Verify that the publish directory exists and contains files
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./publish
-
-      - name: List files in current directory
-        run: dir # For debug purposes
+          path: ./publish # Ensure that this path is correct
 
   deploy:
     runs-on: windows-latest
@@ -56,15 +53,11 @@ jobs:
         with:
           name: .net-app
 
-      - name: Print current working directory
-        run: pwd
-
       - name: List files in current directory
-        run: dir # List all files and directories
+        run: dir # List all files and directories to verify download
 
-      - name: List files in publish directory
-        run: |
-          dir ./publish 
+      - name: List files in artifact directory
+        run: dir ./publish # Verify that the artifact was downloaded correctly
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -79,4 +72,4 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: './publish'
+          package: './publish' # Ensure this path is correct
