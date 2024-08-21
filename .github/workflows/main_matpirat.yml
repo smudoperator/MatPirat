@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  backup-and-deploy:
+  backup-and-build:
     runs-on: windows-latest
 
     steps:
@@ -21,13 +21,25 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Verify Database Path
+        run: |
+          Write-Host "Current directory:"
+          pwd
+          Write-Host "Listing files in Data directory:"
+          dir Data
+
       - name: Backup SQLite Database
         run: |
-          if (Test-Path 'Database/dinners.db') {
-            Copy-Item 'Database/dinners.db' 'Database/dinners_backup.db'
+          if (Test-Path 'Data/dinners.db') {
+            Write-Host "Database exists. Proceeding with backup."
+            Copy-Item 'Data/dinners.db' 'Data/dinners_backup.db'
           } else {
             Write-Host "Database does not exist. Skipping backup."
           }
+
+      - name: Verify Backup File
+        run: dir Data
+        
       - name: Restore dependencies
         run: dotnet restore Dinners2.sln
 
@@ -50,11 +62,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: database-backup
-          path: Database/dinners_backup.db
+          path: Data/dinners_backup.db
+          if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
 
   deploy:
     runs-on: windows-latest
-    needs: backup-and-deploy
+    needs: backup-and-build
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -88,8 +103,9 @@ jobs:
 
       - name: Restore SQLite Database
         run: |
-          if (Test-Path 'Database/dinners_backup.db') {
-            Move-Item 'Database/dinners_backup.db' 'Database/dinners.db' -Force
+          if (Test-Path 'Data/dinners_backup.db') {
+            Write-Host "Backup exists. Restoring."
+            Move-Item 'Data/dinners_backup.db' 'Data/dinners.db' -Force
           } else {
             Write-Host "No backup found. Skipping restore."
           }
