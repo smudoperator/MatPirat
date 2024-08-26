@@ -1,24 +1,13 @@
 @echo off
-echo Handling Custom Deployment.
+:: 1. Create app_offline.htm to stop the app during deployment
+echo Creating app_offline.htm
+echo app_offline.htm > "%DEPLOYMENT_TARGET%\app_offline.htm"
 
-:: Skip file deletion for the database
-set OPT_EXCLUDE_FILE="dinners.db"
+:: 2. KuduSync to sync files, but exclude the database file
+echo Syncing files, excluding dinners.db
+:: Use KuduSync with the --exclude option
+KuduSync.NET.exe -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n --exclude="dinners.db"
 
-:: Run KuduSync
-call :ExecuteCmd "kudusync" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n -x "%OPT_EXCLUDE_FILE%" --perf
-
-:: Continue with the rest of the deployment process
-call :ExecuteCmd "cmd /c npm install"
-
-goto :EOF
-
-:ExecuteCmd
-echo %1
-%~1
-IF !ERRORLEVEL! NEQ 0 goto error
-
-goto :EOF
-
-:error
-echo Failed to execute command: %~1
-exit /b 1
+:: 3. Remove app_offline.htm after deployment
+echo Removing app_offline.htm
+del "%DEPLOYMENT_TARGET%\app_offline.htm"
