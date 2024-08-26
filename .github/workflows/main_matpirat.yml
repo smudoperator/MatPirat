@@ -117,7 +117,7 @@ jobs:
           $databasePath = Join-Path $PWD 'Data/dinners.db'
           if (Test-Path $databaseBackupPath) {
             Write-Host "Backup exists. Restoring."
-            Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
+            # Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
           } else {
             Write-Host "No backup found. Skipping restore."
           }
