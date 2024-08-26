@@ -112,12 +112,14 @@ jobs:
           slot-name: 'Production'
           package: .
 
-      # Restore the SQLite database after deployment
+      # Restoring SQLite Database
       - name: Restore SQLite Database
         run: |
-          if (Test-Path 'Data/dinners_backup.db') {
+          $databaseBackupPath = Join-Path $PWD 'dinners_backup.db'
+          $databasePath = Join-Path $PWD 'dinners.db'
+          if (Test-Path $databaseBackupPath) {
             Write-Host "Backup exists. Restoring."
-            Move-Item 'Data/dinners_backup.db' 'Data/dinners.db' -Force
+            Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
           } else {
             Write-Host "No backup found. Skipping restore."
           }
