@@ -28,7 +28,6 @@ jobs:
           pwd
           Write-Host "Listing files in Data directory:"
           dir Data
-
       - name: Backup SQLite Database
         run: |
           if (Test-Path 'Data/dinners.db') {
@@ -37,7 +36,6 @@ jobs:
           } else {
             Write-Host "Database does not exist. Skipping backup."
           }
-
       - name: Verify Backup File
         run: dir Data
         
@@ -116,7 +114,7 @@ jobs:
       - name: Restore SQLite Database
         run: |
           $databaseBackupPath = Join-Path $PWD 'dinners_backup.db'
-          $databasePath = Join-Path $PWD 'dinners.db'
+          $databasePath = Join-Path $PWD 'Data/dinners.db'
           if (Test-Path $databaseBackupPath) {
             Write-Host "Backup exists. Restoring."
             Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
