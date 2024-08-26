@@ -13,13 +13,34 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
+      # Backup the SQLite database before building
+      - name: Verify Database Path
+        run: |
+          Write-Host "Current directory:"
+          pwd
+          Write-Host "Listing files in Data directory:"
+          dir Data
+
+      - name: Backup SQLite Database
+        run: |
+          if (Test-Path 'Data/dinners.db') {
+            Write-Host "Database exists. Proceeding with backup."
+            Copy-Item 'Data/dinners.db' 'Data/dinners_backup.db'
+          } else {
+            Write-Host "Database does not exist. Skipping backup."
+          }
+
+      - name: Verify Backup File
+        run: dir Data
+        
       - name: Restore dependencies
         run: dotnet restore Dinners2.sln
 
@@ -38,8 +59,15 @@ jobs:
           name: .net-app
           path: ./publish
 
-      - name: List files in current directory
-        run: dir # For debug purposes
+      # Upload the backup database as an artifact for the deploy step
+      - name: Upload database backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: database-backup
+          path: Data/dinners_backup.db
+          if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
 
   deploy:
     runs-on: windows-latest
@@ -49,12 +77,19 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
+      contents: read
+      deployments: write
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+
+      - name: Download database backup
+        uses: actions/download-artifact@v4
+        with:
+          name: database-backup
 
       - name: Print current working directory
         run: pwd
@@ -76,3 +111,13 @@ jobs:
           app-name: 'MatPirat'
           slot-name: 'Production'
           package: .
+
+      # Restore the SQLite database after deployment
+      - name: Restore SQLite Database
+        run: |
+          if (Test-Path 'Data/dinners_backup.db') {
+            Write-Host "Backup exists. Restoring."
+            Move-Item 'Data/dinners_backup.db' 'Data/dinners.db' -Force
+          } else {
+            Write-Host "No backup found. Skipping restore."
+          }
