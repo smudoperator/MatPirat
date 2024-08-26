@@ -11,3 +11,5 @@ KuduSync.NET.exe -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n --ex
 :: 3. Remove app_offline.htm after deployment
 echo Removing app_offline.htm
 del "%DEPLOYMENT_TARGET%\app_offline.htm"
+
+:: Testing if works
