@@ -112,7 +112,7 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: ./publish
+          package: .
 
       # Restore SQLite Database
       - name: Restore SQLite Database
