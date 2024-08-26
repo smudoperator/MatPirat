@@ -16,7 +16,7 @@ namespace Dinners2.Dtos
 
         public DinnerType Type { get; set; }
 
-        public MeatType MeatType { get; set; }
+        public MeatType? MeatType { get; set; }
 
         public SkillLevel SkillLevel { get; set; }
 
