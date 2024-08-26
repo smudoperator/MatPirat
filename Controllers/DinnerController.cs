@@ -1,6 +1,5 @@
 ﻿using Dinners2.CommandHandlers;
 using Dinners2.Commands;
-using Dinners2.Dtos;
 using Dinners2.Queries;
 using Dinners2.QueryHandlers;
 using Dinners2.Services;
