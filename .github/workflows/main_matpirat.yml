@@ -28,17 +28,19 @@ jobs:
           pwd
           Write-Host "Listing files in Data directory:"
           dir Data
+
       - name: Backup SQLite Database
         run: |
-          if (Test-Path 'Data/dinners.db') {
+          if (Test-Path 'Data\dinners.db') {
             Write-Host "Database exists. Proceeding with backup."
-            Copy-Item 'Data/dinners.db' 'Data/dinners_backup.db'
+            Copy-Item 'Data\dinners.db' 'Data\dinners_backup.db' -Force
           } else {
             Write-Host "Database does not exist. Skipping backup."
           }
+
       - name: Verify Backup File
         run: dir Data
-        
+
       - name: Restore dependencies
         run: dotnet restore Dinners2.sln
 
@@ -62,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: database-backup
-          path: Data/dinners_backup.db
+          path: Data\dinners_backup.db
           if-no-files-found: warn
           compression-level: 6
           overwrite: false
@@ -108,16 +110,16 @@ jobs:
         with:
           app-name: 'MatPirat'
           slot-name: 'Production'
-          package: .
+          package: ./publish
 
-      # Restoring SQLite Database
+      # Restore SQLite Database
       - name: Restore SQLite Database
         run: |
           $databaseBackupPath = Join-Path $PWD 'dinners_backup.db'
-          $databasePath = Join-Path $PWD 'Data/dinners.db'
+          $databasePath = Join-Path $PWD 'Data\dinners.db'
           if (Test-Path $databaseBackupPath) {
             Write-Host "Backup exists. Restoring."
-            # Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
+            Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
           } else {
             Write-Host "No backup found. Skipping restore."
           }
