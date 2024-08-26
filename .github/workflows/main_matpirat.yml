@@ -83,6 +83,13 @@ jobs:
       deployments: write
 
     steps:
+      - name: Ensure wwwroot directory exists
+        run: |
+          $wwwrootPath = 'D:\\home\\site\\wwwroot'
+          if (-Not (Test-Path $wwwrootPath)) {
+            New-Item -Path $wwwrootPath -ItemType Directory
+          }
+          
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
@@ -118,7 +125,7 @@ jobs:
       - name: Restore SQLite Database
         run: |
           $databaseBackupPath = Join-Path $PWD 'dinners_backup.db'
-          $databasePath = Join-Path $PWD 'Data\dinners.db'
+          $databasePath = Join-Path $PWD 'D:\\home\\site\\wwwroot\\dinners.db'
           if (Test-Path $databaseBackupPath) {
             Write-Host "Backup exists. Restoring."
             Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
