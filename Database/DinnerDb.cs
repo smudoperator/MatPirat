@@ -12,7 +12,7 @@ namespace Dinners2.Database
         public DinnerDb(DbContextOptions<DinnerDb> options) : base(options)
         {
             // Use a persistent location for the SQLite database file
-            DbPath = Path.Combine("D:\\home\\data", "dinners.db");
+            DbPath = Path.Combine("D:\\home\\site\\wwwroot", "dinners.db");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
