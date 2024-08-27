@@ -9,11 +9,24 @@ namespace Dinners2.Database
         public DbSet<DinnerDto> Dinners { get; set; }
         public string DbPath { get; }
 
-        public DinnerDb(DbContextOptions<DinnerDb> options) : base(options)
+        // heehe
+
+        public DinnerDb(DbContextOptions<DinnerDb> options, IConfiguration configuration) : base(options)
         {
             // Use a persistent location for the SQLite database file
             // testing
             DbPath = Path.Combine("D:\\home\\site\\wwwroot", "dinners.db");
+        }
+            if (configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                // Local development path
+                DbPath = Path.Combine("C:\\Users\\simhal\\source\\repos\\MatPirat\\Data", "dinners.db");
+            }
+            else
+            {
+                // Azure production path
+                DbPath = Path.Combine("D:\\home\\site\\wwwroot", "dinners.db");
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
