@@ -9,6 +9,8 @@ namespace Dinners2.Database
         public DbSet<DinnerDto> Dinners { get; set; }
         public string DbPath { get; }
 
+        // heehe
+
         public DinnerDb(DbContextOptions<DinnerDb> options) : base(options)
         {
             // Use a persistent location for the SQLite database file
