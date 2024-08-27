@@ -16,7 +16,7 @@ namespace Dinners2.Database
             // Use a persistent location for the SQLite database file
             // testing
             DbPath = Path.Combine("D:\\home\\site\\wwwroot", "dinners.db");
-        }
+
             if (configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
             {
                 // Local development path
