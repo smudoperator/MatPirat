@@ -128,6 +128,9 @@ jobs:
         run: |
           echo "AZURE_STORAGE_CONNECTION_STRING=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" >> $GITHUB_ENV
 
+      - name: Print environment variables
+        run: printenv
+
       # Restore SQLite Database
       - name: Restore SQLite Database
         run: |
