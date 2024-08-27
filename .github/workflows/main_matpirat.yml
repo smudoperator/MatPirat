@@ -124,6 +124,10 @@ jobs:
             New-Item -Path $wwwrootPath -ItemType Directory
           }
 
+      - name: Set up environment variables
+        run: |
+          echo "AZURE_STORAGE_CONNECTION_STRING=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" >> $GITHUB_ENV
+
       # Restore SQLite Database
       - name: Restore SQLite Database
         run: |
