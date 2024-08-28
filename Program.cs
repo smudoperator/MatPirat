@@ -14,7 +14,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register DbContexts with the updated configuration
 builder.Services.AddDbContext<DinnerDb>(options =>
-    options.UseSqlite($"Data Source={Path.Combine("D:\\home\\site\\wwwroot", "dinners.db")}"));
+{
+    var environment = builder.Environment.EnvironmentName;
+
+    // Check if the environment is Development
+    if (environment == "Development")
+    {
+        // Local development path
+        options.UseSqlite($"Data Source={Path.Combine("C:\\Users\\simhal\\source\\repos\\MatPirat\\Data", "dinners.db")}");
+    }
+    else
+    {
+        // Azure production path (persistent storage)
+        options.UseSqlite($"Data Source={Path.Combine("D:\\home\\data", "dinners.db")}");
+    }
+});
 
 
 // Testing to add DbContext without connection string
