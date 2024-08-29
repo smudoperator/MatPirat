@@ -9,5 +9,7 @@ namespace Dinners2.Commands
         public int FishAmount { get; set; }
         public bool TacoFriday { get; set; } = false;
         public List<DinnerType> DinnerTypePreferences { get; set; } = new List<DinnerType>();
+
+        // testing
     }
 }
