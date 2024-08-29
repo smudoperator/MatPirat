@@ -31,7 +31,6 @@ jobs:
           pwd
           Write-Host "Listing files in Data directory:"
           dir Data
-
       - name: Backup SQLite Database
         run: |
           if (Test-Path 'Data\dinners.db') {
@@ -40,7 +39,6 @@ jobs:
           } else {
             Write-Host "Database does not exist. Skipping backup."
           }
-
       - name: Verify Backup File
         run: dir Data
 
@@ -57,7 +55,6 @@ jobs:
         run: |
           dir ./publish
           dir # Verify current directory contents
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -117,28 +114,21 @@ jobs:
           slot-name: 'Production'
           package: .
 
-      - name: Ensure wwwroot directory exists
+      - name: Ensure data directory exists in persistent storage
         run: |
-          $wwwrootPath = 'D:\\home\\site\\wwwroot'
-          if (-Not (Test-Path $wwwrootPath)) {
-            New-Item -Path $wwwrootPath -ItemType Directory
+          $dataPath = 'D:\\home\\data'
+          if (-Not (Test-Path $dataPath)) {
+            New-Item -Path $dataPath -ItemType Directory
           }
 
-      - name: Set up environment variables
-        run: |
-          echo "AZURE_STORAGE_CONNECTION_STRING=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" >> $GITHUB_ENV
-
-      - name: Print environment variables
-        run: printenv
-
-      # Restore SQLite Database
-      - name: Restore SQLite Database
+      # Restore SQLite Database to Persistent Storage
+      - name: Restore SQLite Database to Persistent Storage
         run: |
           $databaseBackupPath = Join-Path $PWD 'dinners_backup.db'
-          $databasePath = 'D:\\home\\site\\wwwroot\\dinners.db'  # Directly assign the full path
+          $persistentDatabasePath = 'D:\\home\\data\\dinners.db'  # Directly assign the full path in persistent storage
           if (Test-Path $databaseBackupPath) {
             Write-Host "Backup exists. Restoring."
-            Copy-Item -Path $databaseBackupPath -Destination $databasePath -Force
+            Copy-Item -Path $databaseBackupPath -Destination $persistentDatabasePath -Force
           } else {
             Write-Host "No backup found. Skipping restore."
           }
