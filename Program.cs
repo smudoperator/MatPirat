@@ -43,7 +43,7 @@ builder.Services.AddTransient<GetDinnerQueryHandler>();
 builder.Services.AddScoped<AddDinnerCommandHandler>();
 builder.Services.AddScoped<EditDinnerCommandHandler>();
 builder.Services.AddScoped<DeleteDinnerCommandHandler>();
-builder.Services.AddScoped<PlanDinnersCommandHandler>();
+builder.Services.AddScoped<IDinnerPlanService, DinnerPlanService>();
 
 // Add Services
 builder.Services.AddTransient<DinnerService>();

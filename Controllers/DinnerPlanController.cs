@@ -1,6 +1,5 @@
-﻿using Dinners2.CommandHandlers;
-using Dinners2.Commands;
-using Dinners2.Dtos;
+﻿using Dinners2.Dtos;
+using Dinners2.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dinners2.Controllers
@@ -10,21 +9,20 @@ namespace Dinners2.Controllers
     public class DinnerPlanController : ControllerBase
     {
         private readonly ILogger<DinnerPlanController> _logger;
-        private readonly PlanDinnersCommandHandler _commandHandler;
+        private readonly IDinnerPlanService _dinnerPlanService;
 
         public DinnerPlanController(
             ILogger<DinnerPlanController> logger,
-            PlanDinnersCommandHandler commandHandler)
+            IDinnerPlanService dinnerPlanService)
         {
             _logger = logger;
-            _commandHandler = commandHandler;
+            _dinnerPlanService = dinnerPlanService;
         }
 
         [HttpPost("PlanDinners", Name = "PlanDinners")]
         public ActionResult<DinnerPlanDto> PlanDinners(CreateDinnerPlanDto request)
         {
-            var command = new PlanDinnersCommand();
-            var result = _commandHandler.Handle(command);
+            var result = _dinnerPlanService.PlanDinners(request);
 
             if (result is null)
             {

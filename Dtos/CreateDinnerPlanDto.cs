@@ -2,10 +2,12 @@
 {
     public class CreateDinnerPlanDto
     {
-        public bool TacoFriday { get; set; }
+        public bool TacoFriday { get; set; } = true;
 
-        public DayOfWeek StartDay { get; set; }
+        public DayOfWeek StartDay { get; set; } = DayOfWeek.Monday;
 
-        public int NumberOfDays { get; set; }
+        public int NumberOfDays { get; set; } = 5;
+
+        public int NumberOfFish { get; set; } = 0;
     }
 }
