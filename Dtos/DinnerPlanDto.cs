@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Dinners2.Dtos
 {
     public class DinnerPlanDto

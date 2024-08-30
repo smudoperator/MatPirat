@@ -1,16 +1,8 @@
-using Dinners2.CommandHandlers;
 using Dinners2.Database;
-using Dinners2.QueryHandlers;
 using Dinners2.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Register DbContexts
-//builder.Services.AddDbContext<DinnerDb>(options =>
-//    options.UseSqlite("Data Source=dinners.db"));
-//builder.Services.AddDbContext<DinnerDb>(options =>
-//    options.UseSqlite("Data Source=D:\\home\\site\\wwwroot\\data\\dinners.db"));
 
 // Register DbContexts with the updated configuration
 builder.Services.AddDbContext<DinnerDb>(options =>
@@ -31,18 +23,9 @@ builder.Services.AddDbContext<DinnerDb>(options =>
 });
 
 
-// Testing to add DbContext without connection string
-// builder.Services.AddDbContext<DinnerDb>();
-
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// Add Handlers
-//builder.Services.AddTransient<GetDinnerQueryHandler>();
-//builder.Services.AddScoped<AddDinnerCommandHandler>();
-//builder.Services.AddScoped<EditDinnerCommandHandler>();
-//builder.Services.AddScoped<DeleteDinnerCommandHandler>();
 
 
 // Add Services
