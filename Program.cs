@@ -39,14 +39,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Handlers
-builder.Services.AddTransient<GetDinnerQueryHandler>();
-builder.Services.AddScoped<AddDinnerCommandHandler>();
-builder.Services.AddScoped<EditDinnerCommandHandler>();
-builder.Services.AddScoped<DeleteDinnerCommandHandler>();
-builder.Services.AddScoped<IDinnerPlanService, DinnerPlanService>();
+//builder.Services.AddTransient<GetDinnerQueryHandler>();
+//builder.Services.AddScoped<AddDinnerCommandHandler>();
+//builder.Services.AddScoped<EditDinnerCommandHandler>();
+//builder.Services.AddScoped<DeleteDinnerCommandHandler>();
+
 
 // Add Services
-builder.Services.AddTransient<DinnerService>();
+builder.Services.AddScoped<IDinnerService, DinnerService>();
+builder.Services.AddScoped<IDinnerPlanService, DinnerPlanService>();
+
 
 // Configure CORS
 builder.Services.AddCors(options =>

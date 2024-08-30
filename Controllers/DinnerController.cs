@@ -1,5 +1,6 @@
 ﻿using Dinners2.CommandHandlers;
 using Dinners2.Commands;
+using Dinners2.Dtos;
 using Dinners2.Queries;
 using Dinners2.QueryHandlers;
 using Dinners2.Services;
@@ -12,40 +13,29 @@ namespace Dinners2.Controllers
     public class DinnerController : ControllerBase
     {
         private readonly ILogger<DinnerController> _logger;
-
-        private readonly AddDinnerCommandHandler _addDinnerHandler;
-        private readonly GetDinnerQueryHandler _getDinnerHandler;
-        private readonly DinnerService _dinnerService;
-        private readonly DeleteDinnerCommandHandler _deleteDinnerHandler;
-        private readonly EditDinnerCommandHandler _editDinnerHandler;
+        private readonly IDinnerService _dinnerService;
 
         public DinnerController(
             ILogger<DinnerController> logger,
-            AddDinnerCommandHandler addDinnerHandler,
-            GetDinnerQueryHandler getDinnerHandler,
-            DinnerService dinnerService,
-            DeleteDinnerCommandHandler deleteDinnerHandler,
-            EditDinnerCommandHandler editDinnerHandler)
+            IDinnerService dinnerService
+            )
         {
             _logger = logger;
-            _addDinnerHandler = addDinnerHandler;
-            _getDinnerHandler = getDinnerHandler;
             _dinnerService = dinnerService;
-            _deleteDinnerHandler = deleteDinnerHandler;
-            _editDinnerHandler = editDinnerHandler;
         }
 
         // QUERIES
 
         [HttpPost("GetDinner", Name = "GetDinner")]
-        public async Task<IActionResult> GetDinner(GetDinnerQuery query)
+        public async Task<IActionResult> GetDinner(Guid id)
         {
-            var dinner = await _getDinnerHandler.Handle(query);
+            var dinner = await _dinnerService.GetDinner(id);
 
             if (dinner == null)
             {
                 return NotFound();
             }
+
             return Ok(dinner);
         }
 
@@ -58,6 +48,7 @@ namespace Dinners2.Controllers
             {
                 return NotFound();
             }
+
             return Ok(dinners);
         }
 
@@ -65,25 +56,30 @@ namespace Dinners2.Controllers
         // COMMANDS
 
         [HttpPost("AddDinner", Name = "AddDinner")]
-        public async Task<IActionResult> AddDinner(AddDinnerCommand command)
+        public async Task<IActionResult> AddDinner(CreateDinnerDto dinner)
         {
-            await _addDinnerHandler.Handle(command);
+            await _dinnerService.AddDinner(dinner);
             
             return Ok(); 
         }
 
         [HttpPost("EditDinner", Name = "EditDinner")]
-        public async Task<IActionResult> EditDinner(EditDinnerCommand command)
+        public async Task<IActionResult> EditDinner(DinnerDto newDinner)
         {
-            await _editDinnerHandler.Handle(command);
+            var result = await _dinnerService.EditDinner(newDinner);
+
+            if (!result)
+            {
+                return BadRequest(); //better handling of errors
+            } 
 
             return Ok();
         }
 
         [HttpPost("DeleteDinner", Name = "DeleteDinner")]
-        public async Task<IActionResult> DeleteDinner(DeleteDinnerCommand command)
+        public async Task<IActionResult> DeleteDinner(Guid id)
         {
-            await _deleteDinnerHandler.Handle(command);
+            await _dinnerService.DeleteDinner(id);
 
             return Ok();
         }

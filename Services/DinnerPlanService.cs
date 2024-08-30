@@ -4,10 +4,10 @@ namespace Dinners2.Services
 {
     public class DinnerPlanService : IDinnerPlanService
     {
-        private readonly DinnerService _dinnerService;
+        private readonly IDinnerService _dinnerService;
         private static Random rng = new Random();
 
-        public DinnerPlanService(DinnerService dinnerService)
+        public DinnerPlanService(IDinnerService dinnerService)
         {
             _dinnerService = dinnerService;
         }
