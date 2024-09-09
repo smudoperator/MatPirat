@@ -58,7 +58,8 @@ namespace Dinners2.Services
             // Add missing dinners
             var potentialDinners = dinners
                 .Take(request.NumberOfDays * 2)
-                .Where(x => x.Type != DinnerType.Fish);
+                .Where(x => x.Type != DinnerType.Fish && !x.Name.Contains("taco"));
+
 
             foreach (var dinner in potentialDinners)
             {

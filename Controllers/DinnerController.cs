@@ -20,8 +20,6 @@ namespace Dinners2.Controllers
             _dinnerService = dinnerService;
         }
 
-        // QUERIES
-
         [HttpPost("GetDinner", Name = "GetDinner")]
         public async Task<IActionResult> GetDinner(Guid id)
         {
@@ -48,8 +46,6 @@ namespace Dinners2.Controllers
             return Ok(dinners);
         }
 
-
-        // COMMANDS
 
         [HttpPost("AddDinner", Name = "AddDinner")]
         public async Task<IActionResult> AddDinner(CreateDinnerDto dinner)
