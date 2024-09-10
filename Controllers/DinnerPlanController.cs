@@ -19,8 +19,9 @@ namespace Dinners2.Controllers
             _dinnerPlanService = dinnerPlanService;
         }
 
+
         [HttpPost("PlanDinners", Name = "PlanDinners")]
-        public ActionResult<DinnerPlanDto> PlanDinners(CreateDinnerPlanDto request)
+        public ActionResult<DinnerPlanDto> PlanDinners([FromBody] CreateDinnerPlanDto request)
         {
             var result = _dinnerPlanService.PlanDinners(request);
 
