@@ -37,7 +37,7 @@ builder.Services.AddScoped<IDinnerPlanService, DinnerPlanService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:3000") // Replace with actual frontend URL
+        builder => builder.WithOrigins("http://localhost:3000", "https://smudoperator.github.io")
                           .AllowAnyHeader()
                           .AllowAnyMethod()
                           .AllowCredentials());
