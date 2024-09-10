@@ -40,14 +40,19 @@ namespace Dinners2.Services
             if (request.TacoFriday)
             {
                 var taco = await _dinnerService.GetTaco();
-                result.Add(taco);
+                if (taco is not null)
+                {
+                    result.Add(taco);
+                }
             } 
 
 
             // Fish
-            var fishDinners = dinners
-                .Take(request.NumberOfFish)
+            var allFishDinners = dinners
                 .Where(x => x.Type == DinnerType.Fish);
+
+            var fishDinners = allFishDinners
+                .Take(request.NumberOfFish);
 
             if (fishDinners is not null)
             {
