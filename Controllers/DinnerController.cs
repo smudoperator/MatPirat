@@ -75,5 +75,18 @@ namespace Dinners2.Controllers
 
             return Ok();
         }
+
+        [HttpPost("GetDinnersByTag", Name = "GetDinnersByTag")]
+        public async Task<IActionResult> GetDinnersByTag(string tag)
+        {
+            var result = await _dinnerService.GetDinnersByTag(tag);
+
+            if (result is null)
+            {
+                return BadRequest();
+            }
+            
+            return Ok(result);
+        }
     }
 }

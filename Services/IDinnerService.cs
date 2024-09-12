@@ -15,5 +15,7 @@ namespace Dinners2.Services
         Task<bool> EditDinner(DinnerDto dto);
 
         Task<bool> DeleteDinner(Guid id);
+        
+        Task<List<DinnerDto>> GetDinnersByTag(string tag);
     }
 }

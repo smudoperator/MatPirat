@@ -101,10 +101,27 @@ namespace Dinners2.Services
             _dinnerDb.Dinners.Remove(dinner);
             await _dinnerDb.SaveChangesAsync();
 
+
             return true;
         }
 
-        
+        public async Task<List<DinnerDto>> GetDinnersByTag(string tag)
+        {
+            // since i don't want to bother creating a separate table for tags, we'll have to settle for 
+            // client side filtering here due to sql's lack of support for any useful string comparer
+            var result = await _dinnerDb.Dinners.ToListAsync();
+                
+            result = result
+                .Where(x => x.Tags.Any(t => t.ToLower().Contains(tag.ToLower())))
+                .ToList();    
+
+            if (result is not null)
+            {
+                return result;
+            }
+
+            return result;
+        }
 
         public async Task<DinnerDto> GetTaco()
         {
