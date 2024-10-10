@@ -54,6 +54,8 @@ namespace Dinners2.Services
                 MeatType = dinner.MeatType,
                 SkillLevel = dinner.SkillLevel,
                 Ingredients = dinner.Ingredients,
+                WorthMakingLeftovers = dinner.WorthMakingLeftovers,
+                Notes = dinner.Notes,
                 Tags = dinner.Tags,
                 ImageData = dinner.ImageData
             };
@@ -80,6 +82,8 @@ namespace Dinners2.Services
             dinner.MeatType = newDinner.MeatType;
             dinner.SkillLevel = newDinner.SkillLevel;
             dinner.Ingredients = newDinner.Ingredients;
+            dinner.WorthMakingLeftovers = newDinner.WorthMakingLeftovers;
+            dinner.Notes = newDinner.Notes;
             dinner.Tags = newDinner.Tags;
             dinner.ImageData = newDinner.ImageData;
 
@@ -95,7 +99,7 @@ namespace Dinners2.Services
 
             if (dinner is null)
             {
-                return false;
+                return false; // already deleted
             }
 
             _dinnerDb.Dinners.Remove(dinner);

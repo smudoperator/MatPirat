@@ -21,6 +21,10 @@ namespace Dinners2.Dtos
 
         public List<string> Ingredients { get; set; } = new List<string>();
 
+        public bool WorthMakingLeftovers { get; set; } = false;
+
+        public string? Notes { get; set; }
+
         public List<string> Tags { get; set; } = new List<string>();
 
         public byte[]? ImageData { get; set; }
@@ -39,6 +43,7 @@ namespace Dinners2.Dtos
 
     public enum MeatType
     {
+        None,
         Beef,
         Pork,
         Lamb,
