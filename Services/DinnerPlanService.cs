@@ -1,7 +1,5 @@
 ﻿using Dinners2.Dtos;
 using Dinners2.Extensions;
-using Dinners2.Migrations;
-using Microsoft.AspNetCore.Components.RenderTree;
 
 namespace Dinners2.Services
 {
@@ -17,15 +15,19 @@ namespace Dinners2.Services
 
         public async Task<DinnerPlanDto> PlanDinners(CreateDinnerPlanDto request)
         {
-
+            // fetch all dinners
             var dinners = await _dinnerService.GetAllDinners();
 
+            // shuffle dinners to make seletion random
             var shuffledDinners = dinners.OrderBy(_ => rng.Next()).ToList(); // Trying this shuffle stuff
 
+            // make sure dinner types are being handled
             var filteredDinners = await FilterDinners(request, shuffledDinners);
 
+            // make sure dinners are evenly distributed
             var distributedDinners = DistributeDinners(filteredDinners, request.StartDay);
 
+            // create dinner planDto
             var result = new DinnerPlanDto
             {
                 Dinners = distributedDinners,
@@ -81,9 +83,13 @@ namespace Dinners2.Services
             return result;
         }
 
+        // This method is utter dogshit but it works well enough
         private List<DinnerDto> DistributeDinners(List<DinnerDto> dinners, DayOfWeek startDay)
         {
             var result = new List<DinnerDto>();
+
+            // shuffle
+            dinners.OrderBy(_ => rng.Next()).ToList();
 
             // fetch index for taco (friday)
             var tacoIndex = GetTacoIndex(startDay, dinners.Count());
@@ -114,16 +120,18 @@ namespace Dinners2.Services
 
                 i++;
                 
-            }   
+            }
+
+            // handle taco
+            var taco = result.FirstOrDefault(x => x.Name.ToLower().Contains("taco")); 
+            if (taco is not null)
+            {
+                result.Remove(taco);
+                result.Insert(tacoIndex, taco);
+            }
             
-            // kind of needs to handle 
-            
-            
-            
-            
-            
-            // other dinners are distributed by type
-            
+
+
             return result;
         }
 
@@ -147,9 +155,6 @@ namespace Dinners2.Services
             }
 
             return index; 
-        }
-        
-        
+        }   
     }
-
 }
