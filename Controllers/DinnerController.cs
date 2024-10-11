@@ -46,6 +46,19 @@ namespace Dinners2.Controllers
             return Ok(dinners);
         }
 
+        [HttpGet("GetSimpleDinners", Name = "GetSimpleDinners")]
+        public async Task<IActionResult> GetSimpleDinners()
+        {
+            var dinners = await _dinnerService.GetAllSimpleDinners();
+
+            if (dinners == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(dinners);
+        }
+
 
         [HttpPost("AddDinner", Name = "AddDinner")]
         public async Task<IActionResult> AddDinner(CreateDinnerDto dinner)
@@ -90,3 +103,4 @@ namespace Dinners2.Controllers
         }
     }
 }
+

@@ -31,6 +31,33 @@ namespace Dinners2.Services
             return dinners;
         }
 
+        public async Task<List<SimpleDinnerDto>> GetAllSimpleDinners()
+        {
+            var dinners = await _dinnerDb.Dinners.ToListAsync();
+
+            var result = new List<SimpleDinnerDto>();
+
+            foreach (var dinner in dinners)
+            {
+                var simpleDinner = new SimpleDinnerDto()
+                {
+                    Id = dinner.Id,
+                    Name = dinner.Name,
+                    Description = dinner.Description,
+                    Type = dinner.Type,
+                    MeatType = dinner.MeatType,
+                    SkillLevel = dinner.SkillLevel,
+                    Ingredients = dinner.Ingredients,
+                    WorthMakingLeftovers = dinner.WorthMakingLeftovers,
+                    Notes = dinner.Notes,
+                    Tags = dinner.Tags
+                };
+                result.Add(simpleDinner);
+            }
+            
+            return result;
+        }
+
         public async Task<DinnerDto> GetDinner(Guid id)
         {
             var dinner = await _dinnerDb.Dinners.FirstOrDefaultAsync(x => x.Id == id);
@@ -104,7 +131,6 @@ namespace Dinners2.Services
 
             _dinnerDb.Dinners.Remove(dinner);
             await _dinnerDb.SaveChangesAsync();
-
 
             return true;
         }

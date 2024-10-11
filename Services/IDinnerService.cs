@@ -6,6 +6,8 @@ namespace Dinners2.Services
     {
         Task<List<DinnerDto>> GetAllDinners();
 
+        Task<List<SimpleDinnerDto>> GetAllSimpleDinners();
+
         Task<DinnerDto> GetDinner(Guid id);
 
         Task<DinnerDto> GetTaco();
