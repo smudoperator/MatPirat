@@ -89,10 +89,7 @@ namespace Dinners2.Services
             var result = new List<DinnerDto>();
 
             // shuffle
-            dinners.OrderBy(_ => rng.Next()).ToList();
-
-            // fetch index for taco (friday)
-            var tacoIndex = GetTacoIndex(startDay, dinners.Count());
+            dinners = dinners.OrderBy(_ => rng.Next()).ToList();
 
             // remove last dinner and add to new dinner list
             result.Add(dinners.Last());
@@ -123,6 +120,7 @@ namespace Dinners2.Services
             }
 
             // handle taco
+            var tacoIndex = GetTacoIndex(startDay, result.Count());
             var taco = result.FirstOrDefault(x => x.Name.ToLower().Contains("taco")); 
             if (taco is not null)
             {
