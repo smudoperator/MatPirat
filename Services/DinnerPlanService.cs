@@ -27,7 +27,7 @@ namespace Dinners2.Services
             // make sure dinners are evenly distributed
             var distributedDinners = DistributeDinners(filteredDinners, request.StartDay);
 
-            var ingredients = distributedDinners.SelectMany(x => x.Ingredients);
+            var ingredients = distributedDinners.SelectMany(x => x.Ingredients).Distinct().ToList();
 
             // create dinner planDto
             var result = new DinnerPlanDto

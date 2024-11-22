@@ -9,7 +9,7 @@ namespace Dinners2.Dtos
 
         public int NumberOfDays { get; set; }
 
-        public IEnumerable<string>? ShoppingList { get; set; }
+        public List<string>? ShoppingList { get; set; }
 
     }
 }

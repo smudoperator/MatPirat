@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Dinners2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5109b08781c77863abc9b8aaa99f917697525873")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba0386dd69bc5ae574df90536cbf1821fda02fa7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Dinners2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Dinners2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
