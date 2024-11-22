@@ -101,6 +101,14 @@ namespace Dinners2.Controllers
             
             return Ok(result);
         }
+
+        [HttpPost("GetSimilarDinner", Name = "GetSimilarDinner")]
+        public async Task<IActionResult> GetSimilarDinner(SimpleDinnerDto dinner, List<DinnerType> dinnerTypes)
+        {
+            var result = await _dinnerService.GetDinner(Guid.NewGuid());
+
+            return Ok(dinner);
+        }
     }
 }
 

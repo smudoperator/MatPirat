@@ -158,5 +158,10 @@ namespace Dinners2.Services
             var taco = await _dinnerDb.Dinners.FirstOrDefaultAsync(x => x.Name.ToLower().Contains("taco"));
             return taco;
         }
+
+        public async Task<DinnerDto> GetSimilarDinner(DinnerDto dinner, List<DinnerType> dinnerTypes)
+        {
+            return null;
+        }
     }
 }

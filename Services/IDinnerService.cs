@@ -10,6 +10,8 @@ namespace Dinners2.Services
 
         Task<DinnerDto> GetDinner(Guid id);
 
+        Task<DinnerDto> GetSimilarDinner(DinnerDto dinner, List<DinnerType> dinnerTypes);
+
         Task<DinnerDto> GetTaco();
 
         Task AddDinner(CreateDinnerDto dto);

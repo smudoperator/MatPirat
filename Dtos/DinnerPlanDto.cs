@@ -8,5 +8,8 @@ namespace Dinners2.Dtos
         public DayOfWeek StartDay { get; set; }
 
         public int NumberOfDays { get; set; }
+
+        public IEnumerable<string>? ShoppingList { get; set; }
+
     }
 }
